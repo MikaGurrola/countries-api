@@ -1,0 +1,25 @@
+body {
+  // colors
+  --app-bg: hsl(0, 0%, 98%); //Light Mode Background
+  --text-color: hsl(200, 15%, 8%); //Light Mode Text
+  --input-color: hsl(0, 0%, 52%); //Light Mode Input
+  --bg-color: hsl(0, 0%, 100%); // Light Mode Elements
+
+  // box-shadow
+  --box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+
+
+
+  // auto dark mode for now
+  @media (prefers-color-scheme: dark) {
+    --app-bg: hsl(207, 26%, 17%); //Dark Mode Background
+    --text-color: hsl(0, 0%, 100%); //Dark Mode Text
+    --input-color: hsl(0, 0%, 52%); //Dark Mode Input
+    --bg-color: hsl(209, 23%, 22%); // Dark Mode Elements
+  }
+
+
+  // default colors
+  background: var(--app-bg);
+  color: var(--text-color);
+}
