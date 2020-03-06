@@ -1,12 +1,10 @@
 <template>
-  <div class="input-group">
-    <div class="dropdown">
-      <button v-if="filter === ''" v-on:click="isOpen = !isOpen">Filter by region <i class="fas fa-sort-down"></i></button>
-      <button v-else v-on:click="isOpen = !isOpen">{{filter}} <i class="fas fa-sort-down"></i></button>
-      <div class="options" v-bind:class="{ open: isOpen }">
-        <button v-for="region in regions" :key="region" v-on:click="selectFilter(region)">{{region}}</button>
-        <button v-if="filter !== ''" v-on:click="selectFilter('')">CLEAR FILTER</button>
-      </div>
+  <div class="dropdown">
+    <button v-if="filter === ''" v-on:click="isOpen = !isOpen">Filter by region <i class="fas fa-sort-down"></i></button>
+    <button v-else v-on:click="isOpen = !isOpen">{{filter}} <i class="fas fa-sort-down"></i></button>
+    <div class="options" v-bind:class="{ open: isOpen }">
+      <button v-for="region in regions" :key="region" v-on:click="selectFilter(region)">{{region}}</button>
+      <button v-if="filter !== ''" v-on:click="selectFilter('')">CLEAR FILTER</button>
     </div>
   </div>
 </template>

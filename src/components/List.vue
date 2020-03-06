@@ -36,13 +36,29 @@ export default {
 
 <style scoped lang="scss">
 @import '../assets/lib-styles/mixins.scss';
+@import '../assets/lib-styles/breakpoints.scss';
 
 ul { list-style: none; }
 
 .list {
-  padding: 30px;
+  padding: 30px 15px;
   display: grid;
   grid-gap: 40px;
+  justify-content: center;
+  @media screen and (min-width: $mobile-xl) {
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    padding: 0;
+  }
+
+  @media screen and (min-width: $tablet) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (min-width: $desktop) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 75px;
+  }
 
   &__item {
     @include element;

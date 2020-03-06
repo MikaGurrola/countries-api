@@ -1,5 +1,5 @@
 <template>
-  <div class="input-group">
+  <div class="search">
     <i class="fas fa-search"></i>
     <input 
       v-model="search"
@@ -33,8 +33,16 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../assets/lib-styles/mixins.scss';
+@import '../assets/lib-styles/breakpoints.scss';
 
-.input-group { color: var(--input-color); }
+.search { 
+  color: var(--input-color);
+  margin-bottom: 38px;
+  @media screen and (min-width: $mobile-xl) {
+    max-width: 480px;
+    margin: 0;
+  }
+}
 
 i {
   position: absolute;
@@ -52,7 +60,6 @@ input {
   width: 100%;
   border: none;
   box-sizing: border-box;
-  margin-bottom: 38px;
 }
 
 </style>

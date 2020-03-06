@@ -85,10 +85,9 @@ export default {
     },
 
     filterRegion: function(region) {
-      console.log('hello?', region);
       if(region.length){
         this.filteredCountries = this.countries.filter(country => country.region === region )
-        console.log(this.filteredCountries.length);
+        // console.log(this.filteredCountries.length);
       } else {
         this.filteredCountries = [...this.countries]
       }
@@ -102,8 +101,33 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@import '../assets/lib-styles/breakpoints.scss';
+
 .countries-page {
   padding: 22px 16px;
+
+  @media screen and (min-width: $mobile-xl) {
+    display: grid;
+    grid-template-areas: 
+      "search dropdown"
+      "list     list"
+    ;
+    grid-template-columns: 2fr auto;
+    grid-gap: 48px;
+  }
+  
+
+  @media screen and (min-width: $tablet) {
+    padding: 48px 16px;
+    max-width: 1312px;
+    margin: 0 auto;
+  }
+
+  .search { grid-area: search; }
+  .dropDown { grid-area: dropdown; }
+  .list { grid-area: list; }
+  
+
 }
 
 </style>

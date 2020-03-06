@@ -32,11 +32,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@import '../assets/lib-styles/breakpoints.scss';
 
 .toolbar {
   padding: 12px;
   box-shadow: var(--box-shadow);
   background: var(--bg-color);
+
+  @media screen and (min-width: $tablet) {
+    padding: 20px 16px;
+  }
 
   &__inner {
     display: grid;
@@ -48,6 +53,12 @@ export default {
       font-size: 1em;
       line-height: 20px;
       font-weight: 800;
+    }
+
+
+    @media screen and (min-width: $tablet) {
+      max-width: 1280px;
+      margin: 0 auto;
     }
   }
 
