@@ -2,14 +2,31 @@
 <div class="toolbar">
   <div class="toolbar__inner">
     <h1>Where in the world?</h1>
-    <button> <i class="far fa-moon"></i> Dark Mode </button>
+    <button v-on:click="toggleTheme"> 
+      <i v-if="darkTheme" class="fas fa-moon"></i>
+      <i v-else class="far fa-moon"></i> 
+      Dark Mode 
+    </button>
   </div>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'Toolbar'
+  name: 'Toolbar',
+
+  data() {
+    return {
+      darkTheme: false
+    }
+  },
+
+  methods: {
+    toggleTheme: function() {
+      this.darkTheme = !this.darkTheme
+      this.darkTheme ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme')
+    }
+  }
 }
 </script>
 
@@ -42,7 +59,7 @@ export default {
     font-weight: 300;
     background: var(--bg-color);
     color: var(--text-color);
-    .far {margin-right: 5px;}
+    .fa-moon {margin-right: 5px;}
   }
 }
 
