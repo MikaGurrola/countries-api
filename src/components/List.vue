@@ -76,13 +76,4 @@ ul { list-style: none; }
   }
 }
 
-a {
-  color: var(--text-color);
-  text-decoration: none;
-  
-  &:hover, &:visited, &:active {
-    color: var(--text-color);
-  }
-}
-
 </style>

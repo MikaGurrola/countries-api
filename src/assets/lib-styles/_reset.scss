@@ -121,3 +121,15 @@ img {
   width: 100%;
   height: auto;
 }
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+  display: inline-block;
+  
+  &:hover,
+  &:visited,
+  &:active {
+    color: var(--text-color);
+  }
+}
