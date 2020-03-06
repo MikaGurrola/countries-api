@@ -1,9 +1,9 @@
 <template>
   <div class="countries-page">
 
-    <Search />
-    <Dropdown />
-    <List :data="countries" />
+    <Search v-on:search="filterSearch" />
+    <Dropdown :regions="regions" v-on:filter="filterRegion"/>
+    <List :data="filteredCountries" />
 
   </div>
 
@@ -24,14 +24,22 @@ export default {
 
   data() {
     return {
-      countries: []
+      countries: [],
+      filteredCountries: [],
+      regions: [],
+      searchQuery: '',
+      regionQuery: '',
+      searchIsActive: false,
+      regionIsActive: false
     }
   },
 
   mounted: function() {
     if(localStorage.getItem('countries')) {
       this.countries = [...JSON.parse(localStorage.getItem('countries'))]
-      console.log('already have countries:', this.countries)
+      this.filteredCountries = [...this.countries]
+      this.getRegions();
+      // console.log('already have countries:', this.countries)
     } else {
       this.getCountries()
     }
@@ -40,19 +48,52 @@ export default {
   methods: {
 
     getCountries: function() {
-      console.log('getting countries!')
+      // console.log('getting countries!')
 
       fetch('https://restcountries.eu/rest/v2/all')
         .then((response) => {
           return response.json()
         })
         .then((data) => {
-          console.log('data', data)
+          // console.log('data', data)
           this.countries = [...data]
+          this.filteredCountries = [...this.countries]
           localStorage.setItem('countries', JSON.stringify(data))
         });
 
-    }
+    },
+
+    getRegions: function() {
+      const allRegions = this.countries.map(country => country.region).filter(region => region.length)
+      allRegions.sort()
+      // Sets are a thing?!
+      this.regions = [...new Set(allRegions)]
+    },
+
+
+    filterSearch: function(query) {
+      if(query.length) {
+        this.searchIsActive = true
+        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(query.toLowerCase()) > -1)
+      } else {
+        this.searchIsActive = false
+        this.filteredCountries = [...this.countries]
+      }
+
+
+      // this.filteredCountries = query.length ? this.countries.filter(country => country.name.toLowerCase().indexOf(query.toLowerCase()) > -1) : [...this.countries];
+    },
+
+    filterRegion: function(region) {
+      console.log('hello?', region);
+      if(region.length){
+        this.filteredCountries = this.countries.filter(country => country.region === region )
+        console.log(this.filteredCountries.length);
+      } else {
+        this.filteredCountries = [...this.countries]
+      }
+    },
+
   }
 
 

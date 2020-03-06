@@ -18,7 +18,7 @@
     <li v-if="!data.length">
       <p>
         <b>Whoops</b> <br>
-        Looks like something went wrong. 
+        No Countries found
       </p>
     </li>
   </ul>

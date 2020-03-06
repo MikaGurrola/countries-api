@@ -1,13 +1,32 @@
 <template>
   <div class="input-group">
     <i class="fas fa-search"></i>
-    <input type="text" placeholder="Search for a country">
+    <input 
+      v-model="search"
+      @input="searching"
+      type="text" 
+      placeholder="Search for a country" 
+      autocomplete="off" 
+      name="search"
+    >
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Search'
+  name: 'Search',
+
+  data() {
+    return {
+      search: ''
+    }
+  },
+
+  methods: {
+    searching() {
+      this.$emit('search', this.search)
+    }
+  }
 }
 </script>
 

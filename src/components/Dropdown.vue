@@ -1,17 +1,11 @@
 <template>
   <div class="input-group">
     <div class="dropdown">
-      <button>Filter by region <i class="fas fa-sort-down"></i></button>
-      <div class="options">
-        <button>Africa</button>
-        <button>America</button>
-        <button>Asia</button>
-        <button>Africa</button>
-        <button>America</button>
-        <button>Asia</button>
-        <button>Africa</button>
-        <button>America</button>
-        <button>Asia</button>
+      <button v-if="filter === ''" v-on:click="isOpen = !isOpen">Filter by region <i class="fas fa-sort-down"></i></button>
+      <button v-else v-on:click="isOpen = !isOpen">{{filter}} <i class="fas fa-sort-down"></i></button>
+      <div class="options" v-bind:class="{ open: isOpen }">
+        <button v-for="region in regions" :key="region" v-on:click="selectFilter(region)">{{region}}</button>
+        <button v-if="filter !== ''" v-on:click="selectFilter('')">CLEAR FILTER</button>
       </div>
     </div>
   </div>
@@ -19,7 +13,22 @@
 
 <script>
 export default {
-  name: 'Dropdown'
+  name: 'Dropdown',
+  props: ['regions'],
+  data() {
+    return {
+      filter: '',
+      isOpen: false
+    }
+  },
+
+  methods: {
+    selectFilter(region) {
+      this.filter = region
+      this.isOpen = false
+      this.$emit('filter', this.filter)
+    }
+  }
 }
 </script>
 
@@ -32,6 +41,7 @@ export default {
   width: fit-content;
   min-width: 200px;
   padding: 8px 0;
+  z-index: 1;
 }
 
 .options {
@@ -44,11 +54,9 @@ export default {
     right: 0;
     left: 0;
     width: 100%;
-    height: 144px;
     padding: 8px 0;
     display: flex;
     flex-direction: column;
-    overflow: auto;
   }
 }
 
