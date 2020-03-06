@@ -8,7 +8,7 @@
         <img class="card__flag" v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
         <h1>{{country.name}}</h1>
         <p>Native Name: <span class="light">{{country.nativeName}}</span></p>
-        <p>Population: <span class="light">{{country.population}}</span></p>
+        <p>Population: <span class="light">{{country.population | formatPopulation}}</span></p>
         <p>Region: <span class="light">{{country.region}}</span></p>
         <p>Sub Region: <span class="light">{{country.subRegion}}</span></p>
         <p>Capital: <span class="light">{{country.capital}}</span></p>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import "../filters/formatPopulation"
+
 export default {
   name: 'Country',
   props: ['countryCode'],
@@ -90,6 +92,25 @@ export default {
   grid-gap: 64px;
 }
 
+h1 { 
+  margin-bottom: 16px;
+  font-size: 1.375em;
+  line-height: 1.875em;
+  font-weight: 800;
+}
+p { 
+  margin-bottom: 18px;
+  
+  .light+.light:before {
+    content: ", ";
+  }
+}
+h3 { 
+  font-size: 1.125em;
+  line-height: 1.5em;
+  font-weight: 600;
+  margin: 20px 0;
+}
 
 .button {
   @include element;
@@ -101,20 +122,7 @@ export default {
   i { margin-right: 5px; }
 }
 
-h1 { 
-  margin-bottom: 16px;
-  font-size: 1.375em;
-  line-height: 1.875em;
-  font-weight: 800;
-}
 img { margin-bottom: 30px; }
-h3 { 
-  font-size: 1.125em;
-  line-height: 1.5em;
-  font-weight: 600;
-  margin: 20px 0;
-}
-p { margin-bottom: 18px;}
 
 .borders {
   display: grid;
@@ -127,4 +135,6 @@ p { margin-bottom: 18px;}
     text-align: center;
   }
 }
+
+
 </style>

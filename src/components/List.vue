@@ -7,7 +7,7 @@
           <div class="card__content">
             <h3>{{country.name}}</h3>
             <ul class="stats">
-              <li class="stat">Population: <span class="light">{{country.population | addCommas}}</span> </li>
+              <li class="stat">Population: <span class="light">{{country.population | formatPopulation}}</span> </li>
               <li class="stat">Region: <span class="light">{{country.region}}</span> </li>
               <li class="stat">Capital: <span class="light">{{country.capital}}</span> </li>
             </ul>
@@ -25,17 +25,11 @@
 </template>
 
 <script>
+import "../filters/formatPopulation"
+
 export default {
   name: 'List',
   props: ['data'],
-
-  filters: {
-    addCommas: function (population) {
-      if (!population) return '0'
-      population = Number(population).toLocaleString()
-      return population
-    }
-  }
 
 }
 </script>
