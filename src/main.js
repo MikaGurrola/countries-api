@@ -8,10 +8,14 @@ import '@fortawesome/fontawesome-free/css/all.css'
 const routes = [
   { 
     path: '/', 
-    name: 'Countries',
+    name: 'countries',
     component: Countries
   },
-  { path: '/country', component: Country }
+  { 
+    path: '/country/:countryCode', 
+    name: 'country',
+    component: Country 
+  }
 ]
 
 const router = new VueRouter({

@@ -13,6 +13,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@import '../assets/lib-styles/mixins.scss';
 
 .input-group { color: var(--input-color); }
 
@@ -23,14 +24,15 @@ i {
 }
 
 input {
+  @include element;
   font-size: 1em;
   padding: 15px 15px 15px 73px;
   box-shadow: var(--box-shadow);
   background: var(--bg-color);
+  border-radius: 6px;
   width: 100%;
   border: none;
   box-sizing: border-box;
-  border-radius: 6px;
   margin-bottom: 38px;
 }
 

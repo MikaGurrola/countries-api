@@ -1,13 +1,13 @@
 <template>
-  <h1>Country page!</h1>
+  <div>
+    <h1>Country page!</h1>
+    <p>{{ $route.params.countryCode }}</p>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'Country',
-  props: {
-    msg: String
-  }
 }
 </script>
 
