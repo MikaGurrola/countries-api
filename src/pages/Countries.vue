@@ -39,7 +39,7 @@ export default {
       this.countries = [...JSON.parse(localStorage.getItem('countries'))]
       this.filteredCountries = [...this.countries]
       this.getRegions();
-      // console.log('already have countries:', this.countries)
+      console.log('already have countries:', this.countries)
     } else {
       this.getCountries()
     }
@@ -48,7 +48,6 @@ export default {
   methods: {
 
     getCountries: function() {
-      // console.log('getting countries!')
 
       fetch('https://restcountries.eu/rest/v2/all')
         .then((response) => {
@@ -80,14 +79,11 @@ export default {
         this.filteredCountries = [...this.countries]
       }
 
-
-      // this.filteredCountries = query.length ? this.countries.filter(country => country.name.toLowerCase().indexOf(query.toLowerCase()) > -1) : [...this.countries];
     },
 
     filterRegion: function(region) {
       if(region.length){
         this.filteredCountries = this.countries.filter(country => country.region === region )
-        // console.log(this.filteredCountries.length);
       } else {
         this.filteredCountries = [...this.countries]
       }

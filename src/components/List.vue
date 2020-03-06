@@ -3,7 +3,9 @@
     <li class="list__item" v-for="country in data" :key="country.name">
       <router-link v-if="country" :to="{ name: 'country', params: { countryCode: country.alpha3Code } }">
         <div class="card">
-          <img class="card__flag" v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
+          <div class="card__flag">
+            <img v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
+          </div>
           <div class="card__content">
             <h3>{{country.name}}</h3>
             <ul class="stats">
@@ -64,15 +66,31 @@ ul { list-style: none; }
     @include element;
     overflow: hidden;
     max-width: 264px;
+
+    a {
+      height: 100%;
+      display: inline-block;
+      box-sizing: border-box;
+    }
   }
 }
 
 
 .card {
   display: grid;
+  height: 100%;
+
+  &__flag {
+    height: 160px;
+    img {
+      height: 160px;
+      object-fit: cover;
+    }
+  }
 
   &__content {
-    padding: 30px 25px 40px 25px;
+    padding: 25px 25px 40px 25px;
+    align-self: end;
     h3 {
       font-size: 1.125em;
       line-height: 1.5em;
@@ -81,7 +99,7 @@ ul { list-style: none; }
 
     ul {
       display: grid;
-      grid-gap: 12px;
+      grid-gap: 8px;
     }
   }
 }

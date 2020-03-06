@@ -4,32 +4,38 @@
     <div v-else class="country-page">
       <button class="button" @click="goBack"><i class="fas fa-arrow-left"></i> Back</button>
 
-      <div class="content">
-        <img class="card__flag" v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
-        <h1>{{country.name}}</h1>
-        <p>Native Name: <span class="light">{{country.nativeName}}</span></p>
-        <p>Population: <span class="light">{{country.population | formatPopulation}}</span></p>
-        <p>Region: <span class="light">{{country.region}}</span></p>
-        <p>Sub Region: <span class="light">{{country.subRegion}}</span></p>
-        <p>Capital: <span class="light">{{country.capital}}</span></p>
-
-        <br>
-
-        <p>Top Level Domain: <span class="light" v-for="domain in country.topLevelDomain" :key="domain">{{domain}}</span></p>
-        <p>Currencies: <span class="light" v-for="currency in country.currencies" :key="currency.code">{{currency.code}}</span></p>
-        <p>Languages: <span class="light" v-for="lang in country.languages" :key="lang.name">{{lang.name}}</span></p>
-
-        <br>
-
-        <div v-if="country.borders && country.borders.length > 0">
-          <h3>Border Countries:</h3>
-          <div class="borders">
-            <router-link 
-              v-for="border in country.borders" :key="border"
-              :to="{ name: 'country', params: { countryCode: border } }" 
-              class="button"
-            >{{border}}</router-link>
+      <div class="country">
+        <div class="country__flag">
+          <img v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
+        </div>
+        <div class="country__content">
+          <h1 class="country-name">{{country.name}}</h1>
+          <div class="stats">
+            <p>Native Name: <span class="light">{{country.nativeName}}</span></p>
+            <p>Population: <span class="light">{{country.population | formatPopulation}}</span></p>
+            <p>Region: <span class="light">{{country.region}}</span></p>
+            <p>Sub Region: <span class="light" v-if="country.subRegion">{{country.subRegion}}</span> <span v-else class="light">None</span></p>
+            <p>Capital: <span class="light">{{country.capital}}</span></p>
           </div>
+
+          <div class="etc">
+            <p>Top Level Domain: <span class="light" v-for="domain in country.topLevelDomain" :key="domain">{{domain}}</span></p>
+            <p>Currencies: <span class="light" v-for="currency in country.currencies" :key="currency.code">{{currency.code}}</span></p>
+            <p>Languages: <span class="light" v-for="lang in country.languages" :key="lang.name">{{lang.name}}</span></p>
+          </div>
+
+          <div class="country-borders">
+            <h3>Border Countries:</h3>
+            <div class="borders" v-if="country.borders && country.borders.length > 0">
+              <router-link 
+                v-for="border in country.borders" :key="border"
+                :to="{ name: 'country', params: { countryCode: border } }" 
+                class="button"
+              >{{border}}</router-link>
+            </div>
+            <div v-else class="borders"><span>None</span></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -85,11 +91,91 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../assets/lib-styles/mixins.scss';
+@import '../assets/lib-styles/breakpoints.scss';
 
 .country-page {
   padding: 38px 26px;
   display: grid;
   grid-gap: 64px;
+
+  @media screen and (min-width: $tablet) {
+    padding: 80px 16px;
+    max-width: 1312px;
+    margin: 0 auto;
+    grid-gap: 80px;
+  }
+}
+
+.country {
+   @media screen and (min-width: $mobile-xl) {
+    grid-template-columns: minmax(300px,400px) 1fr;
+   }
+  @media screen and (min-width: $tablet) {
+    display: grid;
+    grid-gap: 60px;
+  }
+
+  @media screen and (min-width: $desktop) {
+    grid-template-columns: minmax(400px,560px) 1fr;
+    grid-gap: 120px;
+  }
+
+  &__flag {
+    height: 230px;
+    margin-bottom: 50px;
+    img { height: 230px; object-fit: cover; }
+    @media screen and (min-width: $tablet) {
+      margin-bottom: 0;
+      height: 400px;
+      img { height: 400px }
+    }
+  }
+
+
+  &__content {
+    @media screen and (min-width: $mobile-xl) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 
+        "name name"
+        "stats etc"
+        "borders borders"
+      ;
+    }
+
+    @media screen and (min-width: $tablet) {
+      grid-gap: 20px 50px;
+      height: fit-content;
+      margin: auto 0;
+    }
+  }
+
+
+
+  .country-name { grid-area: name; }
+  .stats { 
+    grid-area: stats;
+    margin-bottom: 40px;
+    @media screen and (min-width: $tablet) {
+      margin: 0;
+    }
+  }
+  .etc { 
+    grid-area: etc;
+    margin-bottom: 40px;
+    @media screen and (min-width: $tablet) {
+      margin: 0;
+    }
+  }
+
+  .country-borders {
+    grid-area: borders; 
+    @media screen and (min-width: $desktop) {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-gap: 15px;
+    }
+  }
 }
 
 h1 { 
@@ -97,9 +183,13 @@ h1 {
   font-size: 1.375em;
   line-height: 1.875em;
   font-weight: 800;
+
+  @media screen and (min-width: $tablet) {
+    margin-bottom: 0;
+  }
 }
 p { 
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   
   .light+.light:before {
     content: ", ";
@@ -109,7 +199,10 @@ h3 {
   font-size: 1.125em;
   line-height: 1.5em;
   font-weight: 600;
-  margin: 20px 0;
+  margin: 16px 0;
+  @media screen and (min-width: $tablet) {
+    margin: 5px 0;
+  }
 }
 
 .button {
@@ -128,6 +221,7 @@ img { margin-bottom: 30px; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: start;
+  align-items: center;
   grid-gap: 10px;
   .button { 
     width: 100%;
