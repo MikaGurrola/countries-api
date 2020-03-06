@@ -31,6 +31,7 @@ input {
   border: none;
   box-sizing: border-box;
   border-radius: 6px;
+  margin-bottom: 38px;
 }
 
 </style>

@@ -1,0 +1,6 @@
+@mixin element {
+  background: var(--bg-color);
+  border: none;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow);
+}

@@ -101,17 +101,19 @@ input, select {
   vertical-align:middle;
 }
 
-html {
-  box-sizing: border-box;
-  div, div:before, div:after {
-    box-sizing: inherit;
-  }
+div { 
+  position: relative;
 }
-
-div { position: relative; }
 
 html, body {
   height: 100%;
+  box-sizing: border-box;
+
+  div,
+  div:before,
+  div:after {
+    box-sizing: inherit;
+  }
 }
 
 
