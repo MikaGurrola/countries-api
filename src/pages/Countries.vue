@@ -1,8 +1,8 @@
 <template>
   <div class="countries-page">
 
-    <Search v-on:search="filterSearch" />
-    <Dropdown :regions="regions" v-on:filter="filterRegion"/>
+    <Search v-on:search="filterSearch" :searchQuery="filterState.searchQuery" />
+    <Dropdown :regions="regions" :selectedRegion="filterState.regionQuery" v-on:filter="filterRegion"/>
     <List :data="filteredCountries" />
 
   </div>
@@ -27,8 +27,7 @@ export default {
       countries: [],
       filteredCountries: [],
       regions: [],
-      searchQuery: '',
-      regionQuery: '',
+      filterState: { searchQuery: '', regionQuery: '' }
     }
   },
 
@@ -39,6 +38,10 @@ export default {
       this.getRegions()
     } else {
       this.getCountries()
+    }
+    if(localStorage.getItem('filterState')) {
+      this.filterState =  {...JSON.parse(localStorage.getItem('filterState'))}
+      this.doFilter()
     }
   },
 
@@ -62,33 +65,35 @@ export default {
     getRegions: function() {
       const allRegions = this.countries.map(country => country.region).filter(region => region.length)
       allRegions.sort()
-      // Sets are a thing?!
        this.regions = [...new Set(allRegions)]
     },
 
-
     filterSearch: function(query) {
-      this.searchQuery = query
+      this.filterState.searchQuery = query
       this.doFilter()
     },
 
     filterRegion: function(region) {
-      this.regionQuery = region
+      this.filterState.regionQuery = region
       this.doFilter()
     },
 
     doFilter: function() {
-      if(this.searchQuery && this.regionQuery){
-        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1).filter(country => country.region === this.regionQuery )
-      } else if(this.searchQuery && !this.regionQuery) {
-        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1)
-      } else if(!this.searchQuery && this.regionQuery) {
-        this.filteredCountries = this.countries.filter(country => country.region === this.regionQuery )
+      if(this.filterState.searchQuery && this.filterState.regionQuery){
+        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(this.filterState.searchQuery.toLowerCase()) > -1).filter(country => country.region === this.filterState.regionQuery )
+      } else if(this.filterState.searchQuery && !this.filterState.regionQuery) {
+        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(this.filterState.searchQuery.toLowerCase()) > -1)
+      } else if(!this.filterState.searchQuery && this.filterState.regionQuery) {
+        this.filteredCountries = this.countries.filter(country => country.region === this.filterState.regionQuery )
       } else {
         this.filteredCountries = [...this.countries]
       }
     }
 
+  },
+
+  beforeDestroy: function() {
+    localStorage.setItem('filterState', JSON.stringify(this.filterState))
   }
 
 

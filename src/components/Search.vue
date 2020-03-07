@@ -15,11 +15,18 @@
 <script>
 export default {
   name: 'Search',
-
+  props: ['searchQuery'],
   data() {
     return {
       search: ''
     }
+  },
+
+  mounted: function() {
+    this.$nextTick(function () {
+      this.search = this.$props.searchQuery
+    })
+
   },
 
   methods: {

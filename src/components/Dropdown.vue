@@ -1,10 +1,18 @@
 <template>
   <div class="dropdown">
-    <button v-if="filter === ''" v-on:click="isOpen = !isOpen">Filter by region <i class="fas fa-sort-down"></i></button>
-    <button v-else v-on:click="isOpen = !isOpen">{{filter}} <i class="fas fa-sort-down"></i></button>
+    <button v-show="selectedRegion === ''" v-on:click="isOpen = !isOpen">
+      Filter by region 
+      <i v-show="isOpen" class="fas fa-sort-up"></i> 
+      <i v-show="!isOpen" class="fas fa-sort-down"></i>
+    </button>
+    <button class="bold" v-show="selectedRegion !== ''" v-on:click="isOpen = !isOpen">
+      {{selectedRegion}} 
+      <i v-show="isOpen" class="fas fa-sort-up"></i> 
+      <i v-show="!isOpen" class="fas fa-sort-down"></i>
+    </button>
     <div class="options" v-bind:class="{ open: isOpen }">
       <button v-for="region in regions" :key="region" v-on:click="selectFilter(region)">{{region}}</button>
-      <button v-if="filter !== ''" v-on:click="selectFilter('')">CLEAR FILTER</button>
+      <button v-show="selectedRegion !== ''" v-on:click="selectFilter('')">CLEAR FILTER</button>
     </div>
   </div>
 </template>
@@ -12,10 +20,9 @@
 <script>
 export default {
   name: 'Dropdown',
-  props: ['regions'],
+  props: ['regions', 'selectedRegion'],
   data() {
     return {
-      filter: '',
       isOpen: false
     }
   },
@@ -68,6 +75,10 @@ button {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.bold {
+  font-weight: 800;
 }
 
 </style>
