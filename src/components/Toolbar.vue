@@ -33,6 +33,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import '../assets/lib-styles/breakpoints.scss';
+@import '../assets/lib-styles/mixins.scss';
 
 .toolbar {
   padding: 12px;
@@ -53,6 +54,9 @@ export default {
       font-size: 1em;
       line-height: 20px;
       font-weight: 800;
+      @media screen and (min-width: $tablet) {
+        font-size: 1.2em;
+      }
     }
 
 
@@ -70,6 +74,7 @@ export default {
     font-weight: 300;
     background: var(--bg-color);
     color: var(--text-color);
+    font-weight: 600;
     .fa-moon {margin-right: 5px;}
   }
 }

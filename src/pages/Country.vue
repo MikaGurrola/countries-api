@@ -194,7 +194,6 @@ h3 {
 .button {
   @include element;
   padding: 10px 24px;
-  border-radius: 0px;
   width: fit-content;
   font-size: 1em;
 

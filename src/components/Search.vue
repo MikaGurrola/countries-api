@@ -60,6 +60,7 @@ input {
   width: 100%;
   border: none;
   box-sizing: border-box;
+  margin: 0;
 }
 
 </style>

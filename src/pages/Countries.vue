@@ -29,8 +29,6 @@ export default {
       regions: [],
       searchQuery: '',
       regionQuery: '',
-      searchIsActive: false,
-      regionIsActive: false
     }
   },
 
@@ -56,6 +54,7 @@ export default {
           this.countries = [...data]
           this.filteredCountries = [...this.countries]
           localStorage.setItem('countries', JSON.stringify(data))
+          this.getRegions()
         });
 
     },
@@ -64,28 +63,31 @@ export default {
       const allRegions = this.countries.map(country => country.region).filter(region => region.length)
       allRegions.sort()
       // Sets are a thing?!
-      this.regions = [...new Set(allRegions)]
+       this.regions = [...new Set(allRegions)]
     },
 
 
     filterSearch: function(query) {
-      if(query.length) {
-        this.searchIsActive = true
-        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(query.toLowerCase()) > -1)
-      } else {
-        this.searchIsActive = false
-        this.filteredCountries = [...this.countries]
-      }
-
+      this.searchQuery = query
+      this.doFilter()
     },
 
     filterRegion: function(region) {
-      if(region.length){
-        this.filteredCountries = this.countries.filter(country => country.region === region )
+      this.regionQuery = region
+      this.doFilter()
+    },
+
+    doFilter: function() {
+      if(this.searchQuery && this.regionQuery){
+        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1).filter(country => country.region === this.regionQuery )
+      } else if(this.searchQuery && !this.regionQuery) {
+        this.filteredCountries = this.countries.filter(country => country.name.toLowerCase().indexOf(this.searchQuery.toLowerCase()) > -1)
+      } else if(!this.searchQuery && this.regionQuery) {
+        this.filteredCountries = this.countries.filter(country => country.region === this.regionQuery )
       } else {
         this.filteredCountries = [...this.countries]
       }
-    },
+    }
 
   }
 
