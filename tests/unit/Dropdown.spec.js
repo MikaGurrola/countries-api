@@ -28,7 +28,12 @@ describe('Dropdown', () => {
     expect(wrapper.findAll('.options button').length).toEqual(7)
   })
 
-  it('Clearing filter should reset options', async () => {
+  it('Should emit selection on click', () => {
+    expect(wrapper.emitted().filter).toBeTruthy()
+    expect(wrapper.emitted().filter).toEqual([['Africa']])
+  })
+
+  it('Should reset options on click', async () => {
     expect(wrapper.vm.isOpen).toBe(false)
     dropdownButton.trigger('click')
     expect(wrapper.vm.isOpen).toBe(true)
@@ -38,5 +43,6 @@ describe('Dropdown', () => {
     expect(wrapper.findAll('.options button').length).toEqual(6)
   })
 
+  
 
 })
