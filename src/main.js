@@ -19,7 +19,8 @@ const routes = [
     name: 'country',
     component: Country,
     props: true
-  }
+  },
+  { path: '*', component: Countries }
 ]
 
 const router = new VueRouter({
