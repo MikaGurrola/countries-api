@@ -38,7 +38,7 @@ export default {
 .search { 
   color: var(--input-color);
   margin-bottom: 38px;
-  @media screen and (min-width: $mobile-xl) {
+  @media screen and (min-width: $phone-xl) {
     max-width: 480px;
     margin: 0;
   }

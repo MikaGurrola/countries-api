@@ -1,7 +1,7 @@
 <template>
 <div class="toolbar">
   <div class="toolbar__inner">
-    <h1>Where in the world?</h1>
+    <p class="title">Where in the world?</p>
     <button v-on:click="toggleTheme"> 
       <i v-if="darkTheme" class="fas fa-moon"></i>
       <i v-else class="far fa-moon"></i> 
@@ -50,19 +50,18 @@ export default {
     grid-gap: 20px;  
     align-items: center;
 
-    h1 {
-      font-size: 1em;
-      line-height: 20px;
-      font-weight: 800;
-      @media screen and (min-width: $tablet) {
-        font-size: 1.2em;
-      }
-    }
-
-
     @media screen and (min-width: $tablet) {
       max-width: 1280px;
       margin: 0 auto;
+    }
+  }
+
+  .title {
+    font-size: 1em;
+    line-height: 20px;
+    font-weight: 800;
+    @media screen and (min-width: $tablet) {
+      font-size: 1.2em;
     }
   }
 

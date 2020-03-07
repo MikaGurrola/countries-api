@@ -23,7 +23,7 @@
         </div>
 
         <div class="country-borders">
-          <h3>Border Countries:</h3>
+          <p>Border Countries:</p>
           <div class="borders" v-if="borders && borders.length > 0">
             <router-link 
               v-for="border in borders" :key="border.name"
@@ -31,7 +31,7 @@
               class="button"
             >{{border.name}}</router-link>
           </div>
-          <div v-else class="borders"><span>None</span></div>
+          <div v-else class="borders"><span class="light">None</span></div>
         </div>
 
       </div>
@@ -96,9 +96,9 @@ export default {
 }
 
 .country {
-   @media screen and (min-width: $mobile-xl) {
+  @media screen and (min-width: $phone-xl) {
     grid-template-columns: minmax(300px,400px) 1fr;
-   }
+  }
   @media screen and (min-width: $tablet) {
     display: grid;
     grid-gap: 60px;
@@ -122,7 +122,7 @@ export default {
 
 
   &__content {
-    @media screen and (min-width: $mobile-xl) {
+    @media screen and (min-width: $phone-xl) {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-areas: 
@@ -164,30 +164,11 @@ export default {
   }
 }
 
-h1 { 
-  margin-bottom: 16px;
-  font-size: 1.375em;
-  line-height: 1.875em;
-  font-weight: 800;
-
-  @media screen and (min-width: $tablet) {
-    margin-bottom: 0;
-  }
-}
 p { 
   margin-bottom: 16px;
   
   .light+.light:before {
     content: ", ";
-  }
-}
-h3 { 
-  font-size: 1.125em;
-  line-height: 1.5em;
-  font-weight: 600;
-  margin: 16px 0;
-  @media screen and (min-width: $tablet) {
-    margin: 5px 0;
   }
 }
 
@@ -204,15 +185,21 @@ img { margin-bottom: 30px; }
 
 .borders {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   justify-content: start;
-  align-items: center;
   grid-gap: 10px;
+
+  @media screen and (min-width: $phone) {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .button { 
     width: 100%;
     padding: 10px 5px;
     box-sizing: border-box;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

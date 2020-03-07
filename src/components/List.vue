@@ -50,7 +50,7 @@ ul { list-style: none; }
   display: grid;
   grid-gap: 40px;
   justify-content: center;
-  @media screen and (min-width: $mobile-xl) {
+  @media screen and (min-width: $phone-xl) {
     grid-template-columns: 1fr 1fr;
     justify-items: center;
     padding: 0;
@@ -86,11 +86,6 @@ ul { list-style: none; }
   &__content {
     padding: 25px 25px 40px 25px;
     align-self: end;
-    h3 {
-      font-size: 1.125em;
-      line-height: 1.5em;
-      margin-bottom: 22px;
-    }
 
     ul {
       display: grid;

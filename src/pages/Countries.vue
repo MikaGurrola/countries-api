@@ -102,7 +102,7 @@ export default {
 .countries-page {
   padding: 22px 16px;
 
-  @media screen and (min-width: $mobile-xl) {
+  @media screen and (min-width: $phone-xl) {
     display: grid;
     grid-template-areas: 
       "search dropdown"
