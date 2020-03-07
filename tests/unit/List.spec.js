@@ -1,15 +1,9 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import List from '../../src/components/List'
-import VueRouter from 'vue-router'
-
-const localVue = createLocalVue()
-localVue.use(VueRouter)
-const router = new VueRouter()
 
 describe('List', () => {
   const wrapper = shallowMount(List, {
-    localVue,
-    router,
+    stubs: ['router-link'],
     propsData: {
       data: [
         {
