@@ -4,6 +4,9 @@ import VueRouter from 'vue-router'
 import Country from './pages/Country.vue'
 import Countries from './pages/Countries.vue'
 import '@fortawesome/fontawesome-free/css/all.css'
+import LazyLoadDirective from "./directives/LazyLoadDirective";
+
+Vue.directive("lazyload", LazyLoadDirective);
 
 const routes = [
   { 

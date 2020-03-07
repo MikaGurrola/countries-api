@@ -211,6 +211,7 @@ img { margin-bottom: 30px; }
   grid-gap: 10px;
   .button { 
     width: 100%;
+    padding: 10px 5px;
     box-sizing: border-box;
     text-align: center;
   }

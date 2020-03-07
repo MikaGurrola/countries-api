@@ -3,9 +3,7 @@
     <li class="list__item" v-for="country in data" :key="country.name">
       <router-link v-if="country" :to="{ name: 'country', params: { countryCode: country.alpha3Code } }">
         <div class="card">
-          <div class="card__flag">
-            <img v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
-          </div>
+          <FlagImage :country="country" />
           <div class="card__content">
             <h3>{{country.name}}</h3>
             <ul class="stats">
@@ -28,10 +26,15 @@
 
 <script>
 import "../filters/formatPopulation"
+import FlagImage from './FlagImage.vue'
 
 export default {
   name: 'List',
   props: ['data'],
+
+  components: {
+    FlagImage
+  },
 
 }
 </script>
@@ -79,14 +82,6 @@ ul { list-style: none; }
 .card {
   display: grid;
   height: 100%;
-
-  &__flag {
-    height: 160px;
-    img {
-      height: 160px;
-      object-fit: cover;
-    }
-  }
 
   &__content {
     padding: 25px 25px 40px 25px;
