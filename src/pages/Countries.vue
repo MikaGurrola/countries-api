@@ -38,8 +38,7 @@ export default {
     if(localStorage.getItem('countries')) {
       this.countries = [...JSON.parse(localStorage.getItem('countries'))]
       this.filteredCountries = [...this.countries]
-      this.getRegions();
-      console.log('already have countries:', this.countries)
+      this.getRegions()
     } else {
       this.getCountries()
     }
@@ -54,7 +53,6 @@ export default {
           return response.json()
         })
         .then((data) => {
-          // console.log('data', data)
           this.countries = [...data]
           this.filteredCountries = [...this.countries]
           localStorage.setItem('countries', JSON.stringify(data))

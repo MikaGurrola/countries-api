@@ -1,42 +1,39 @@
 <template>
-  <div>
-    <h1 v-if="err">Sorry, looks like something went wrong...</h1>
-    <div v-else class="country-page">
-      <button class="button" @click="goBack"><i class="fas fa-arrow-left"></i> Back</button>
+  <div class="country-page">
+    <button class="button" @click="goBack"><i class="fas fa-arrow-left"></i> Back</button>
 
-      <div class="country">
-        <div class="country__flag">
-          <img v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
+    <div class="country">
+      <div class="country__flag">
+        <img v-bind:src="country.flag" :alt="`Flag of ${country.name}`">
+      </div>
+      <div class="country__content">
+        <h1 class="country-name">{{country.name}}</h1>
+        <div class="stats">
+          <p>Native Name: <span class="light">{{country.nativeName}}</span></p>
+          <p>Population: <span class="light">{{country.population | formatPopulation}}</span></p>
+          <p>Region: <span class="light">{{country.region}}</span></p>
+          <p>Sub Region: <span class="light" v-if="country.subRegion">{{country.subRegion}}</span> <span v-else class="light">None</span></p>
+          <p>Capital: <span v-if="country.capital" class="light">{{country.capital}}</span> <span v-else class="light">None</span></p>
         </div>
-        <div class="country__content">
-          <h1 class="country-name">{{country.name}}</h1>
-          <div class="stats">
-            <p>Native Name: <span class="light">{{country.nativeName}}</span></p>
-            <p>Population: <span class="light">{{country.population | formatPopulation}}</span></p>
-            <p>Region: <span class="light">{{country.region}}</span></p>
-            <p>Sub Region: <span class="light" v-if="country.subRegion">{{country.subRegion}}</span> <span v-else class="light">None</span></p>
-            <p>Capital: <span class="light">{{country.capital}}</span></p>
-          </div>
 
-          <div class="etc">
-            <p>Top Level Domain: <span class="light" v-for="domain in country.topLevelDomain" :key="domain">{{domain}}</span></p>
-            <p>Currencies: <span class="light" v-for="currency in country.currencies" :key="currency.code">{{currency.code}}</span></p>
-            <p>Languages: <span class="light" v-for="lang in country.languages" :key="lang.name">{{lang.name}}</span></p>
-          </div>
-
-          <div class="country-borders">
-            <h3>Border Countries:</h3>
-            <div class="borders" v-if="country.borders && country.borders.length > 0">
-              <router-link 
-                v-for="border in country.borders" :key="border"
-                :to="{ name: 'country', params: { countryCode: border } }" 
-                class="button"
-              >{{border}}</router-link>
-            </div>
-            <div v-else class="borders"><span>None</span></div>
-          </div>
-
+        <div class="etc">
+          <p>Top Level Domain: <span class="light" v-for="domain in country.topLevelDomain" :key="domain">{{domain}}</span></p>
+          <p>Currencies: <span class="light" v-for="currency in country.currencies" :key="currency.code">{{currency.code}}</span></p>
+          <p>Languages: <span class="light" v-for="lang in country.languages" :key="lang.name">{{lang.name}}</span></p>
         </div>
+
+        <div class="country-borders">
+          <h3>Border Countries:</h3>
+          <div class="borders" v-if="borders && borders.length > 0">
+            <router-link 
+              v-for="border in borders" :key="border.name"
+              :to="{ name: 'country', params: { countryCode: border.alpha3Code } }" 
+              class="button"
+            >{{border.name}}</router-link>
+          </div>
+          <div v-else class="borders"><span>None</span></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -51,7 +48,8 @@ export default {
   data() {
     return {
       country: {},
-      err: false
+      countries: [],
+      borders: []
     }
   },
 
@@ -61,24 +59,15 @@ export default {
 
   methods: {
     getCountry: function() {
-      // console.log(`getting country: ${this.countryCode}`);
-      // is this the same data that we got from the homeage? 
-      fetch('https://restcountries.eu/rest/v2/alpha/' + this.countryCode)
-        .then((response) => {
-          if (!response.ok) {
-            throw Error(response.statusText)
-          }
-          return response.json()
-        })
-        .then((data) => {
-          this.country = data
-          console.log(this.country)
-        })
-        .catch(() => {
-          //redirect to 404
-          this.err = true
-          console.log('Country not found')
-        })
+      this.countries = [...JSON.parse(localStorage.getItem('countries'))];
+      this.country = this.countries.find(country => country.alpha3Code === this.countryCode);
+      this.getBorders();
+    },
+
+    getBorders: function() {
+      this.borders = this.country.borders.map(borderCountry => { 
+        return this.countries.find(country => country.alpha3Code === borderCountry);
+      });
     },
 
     goBack: function() {
@@ -156,9 +145,6 @@ export default {
   .stats { 
     grid-area: stats;
     margin-bottom: 40px;
-    @media screen and (min-width: $tablet) {
-      margin: 0;
-    }
   }
   .etc { 
     grid-area: etc;

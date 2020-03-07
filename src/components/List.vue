@@ -11,7 +11,7 @@
             <ul class="stats">
               <li class="stat">Population: <span class="light">{{country.population | formatPopulation}}</span> </li>
               <li class="stat">Region: <span class="light">{{country.region}}</span> </li>
-              <li class="stat">Capital: <span class="light">{{country.capital}}</span> </li>
+              <p>Capital: <span v-if="country.capital" class="light">{{country.capital}}</span> <span v-else class="light">None</span></p>
             </ul>
           </div>
         </div>
