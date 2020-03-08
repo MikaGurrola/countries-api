@@ -59,6 +59,7 @@ i {
 
 input {
   @include element;
+  -webkit-appearance: none;
   font-size: 1em;
   padding: 15px 15px 15px 73px;
   box-shadow: var(--box-shadow);

@@ -55,7 +55,7 @@ export default {
 
   &.open {
     position: absolute;
-    top: 56px;
+    top: 60px;
     right: 0;
     left: 0;
     width: 100%;
